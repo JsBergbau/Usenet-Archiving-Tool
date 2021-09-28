@@ -8,7 +8,9 @@ It uses Minixed to show the newsgroup's directory, but has been modififed to han
 
 (UPDATE) New search feature!
 
-(UPDATE) An example archive for the group alt.magick can be found at https://alt-magick.com
+(UPDATE) An example archive for the group alt.magick can be found at:
+
+https://alt-magick.com
 
 (NOTE)   NNTP is a very slow protocol. In order to download every post on alt.magick I had to leave this program running for over 24 hours. 
 
