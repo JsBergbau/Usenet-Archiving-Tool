@@ -16,6 +16,6 @@ It uses Minixed to show the newsgroup's directory, but has been modififed to han
 
 (UPDATE) Add this to 'crontab -e' to automatically check for updates every 10 minuets:
 
-*/10 * * * * python /var/www/html/alt-magick.com/update.py > /dev/null 2>&1
+*/10 * * * * python update.py > /dev/null 2>&1
 
 
