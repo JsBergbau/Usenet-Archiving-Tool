@@ -169,7 +169,9 @@
 	<meta charset="UTF-8">
 	
 	<title><?php echo getTitleHTML($title) ?></title>
-	
+        <link rel = "icon" href = "https://alt-magick.com/files/title.png"
+        type = "image/x-icon">
+
 	<style type="text/css">
 		
 		* {
