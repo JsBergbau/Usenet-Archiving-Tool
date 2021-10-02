@@ -183,7 +183,7 @@
 		body {
 			text-align: center;
 			font-family: sans-serif;
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 			color: #000000;
 		}
 		
@@ -206,21 +206,21 @@
      		}
 	
 		start {
-			font-size: 2.45vw;
+			font-size: 2.25vw;
 			padding: 0 20px;
 			margin: 20px 0 0;
 			font-weight: bold;
 
 		}
 		h {
-			font-size: 1.35vw;
+			font-size: 1.25vw;
 			padding: 0 20px;
 			margin: 10px 0 0;
 			color: #666666;
 			font-weight: normal;
 		}
 		h2 {
-			font-size: 1.35vw;
+			font-size: 1.25vw;
 			padding: 0 40px;
 			margin: 10px 0 0;
 			color: #666666;
@@ -264,13 +264,13 @@
 		
 		ul li .date, ul li .size {
 			float: right;
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 			display: block;
 			color: #666666;
 		}
 		
 		ul#header li {
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 			font-weight: bold;
 			border-bottom: 1px solid #cccccc;
 		}
@@ -281,7 +281,7 @@
 		
 		ul#header li * {
 			color: #000000;
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 		}
 		
 		ul#header li a:hover {
@@ -328,11 +328,11 @@
 			background-image: url('<?php echo $_self ?>?i=file');
 		}
 		authors{
-                        font-size: 1.7vw;
+                        font-size: 1.5vw;
                 }		
 		#footer {
 			color: #cccccc;
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 			margin-top: 40px;
 			margin-bottom: 20px;
 			padding: 0 10px;
@@ -360,8 +360,8 @@ echo date("M d Y")?></h><br><h><?php echo getTitleHTML($subtitle, $breadcrumbs) 
 <div style="width: 74%; float:right">	
 		<ul id="header">
 			<li>
-				<a href="<?php echo buildLink(array('s' => 'size', 'r' => (!$_sort_reverse && $_sort == 'size') ? '1' : null)) ?>" class="size <?php if ($_sort == 'size') echo $_sort_reverse ? 'desc' : 'asc' ?>"><span style="font-size: 1.6vw;">Size</span></a>
-				<a href="<?php echo buildLink(array('s' =>  null , 'r' => (!$_sort_reverse && $_sort == 'name') ? '1' : null)) ?>" class="name <?php if ($_sort == 'name') echo $_sort_reverse ? 'desc' : 'asc' ?>"><span style="font-size: 1.6vw;">Users</span></a>
+				<a href="<?php echo buildLink(array('s' => 'size', 'r' => (!$_sort_reverse && $_sort == 'size') ? '1' : null)) ?>" class="size <?php if ($_sort == 'size') echo $_sort_reverse ? 'desc' : 'asc' ?>"><span style="font-size: 1.4vw;">Size</span></a>
+				<a href="<?php echo buildLink(array('s' =>  null , 'r' => (!$_sort_reverse && $_sort == 'name') ? '1' : null)) ?>" class="name <?php if ($_sort == 'name') echo $_sort_reverse ? 'desc' : 'asc' ?>"><span style="font-size: 1.4vw;">Users</span></a>
 			</li>
 			
 		</ul>

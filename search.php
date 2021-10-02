@@ -184,7 +184,7 @@
 		body {
 			text-align: center;
 			font-family: sans-serif;
-			font-size: 1.35vw;
+			font-size: 1vw;
 			color: #000000;
 		}
 		
@@ -207,21 +207,21 @@
      		}
 	
 		start {
-			font-size: 2.45vw;
+			font-size: 2.25vw;
 			padding: 0 20px;
 			margin: 20px 0 0;
 			font-weight: bold;
 
 		}
 		h {
-			font-size: 1.35vw;
+			font-size: 1.25vw;
 			padding: 0 20px;
 			margin: 10px 0 0;
 			color: #666666;
 			font-weight: normal;
 		}
 		h2 {
-			font-size: 1.35vw;
+			font-size: 1.25vw;
 			padding: 0 40px;
 			margin: 10px 0 0;
 			color: #666666;
@@ -265,13 +265,13 @@
 		
 		ul li .date, ul li .size {
 			float: right;
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 			display: block;
 			color: #666666;
 		}
 		
 		ul#header li {
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 			font-weight: bold;
 			border-bottom: 1px solid #cccccc;
 		}
@@ -282,7 +282,7 @@
 		
 		ul#header li * {
 			color: #000000;
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 		}
 		
 		ul#header li a:hover {
@@ -349,13 +349,13 @@
 		
 		}
 		searches {
-			font-size: 1.7vw;
+			font-size: 1.6vw;
 			line-height: 166%;
 		}
 
 		#footer {
 			color: #cccccc;
-			font-size: 1.35vw;
+			font-size: 1.15vw;
 			margin-top: 40px;
 			margin-bottom: 20px;
 			padding: 0 10px;

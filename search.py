@@ -5,14 +5,14 @@ import os
 import sys
 import fnmatch
 
-search  = sys.argv[1]
+search  = sys.argv[1].lower()
 print 'Searching for "' + search + '".<br>'
 print "<br>"
 
 for root, dirs, files in os.walk('.'):
 	for file in files:
 		with open(os.path.join(root, file), "r") as auto:
-			f = auto.read(500000000)
+			f = auto.read(500000000).lower()
 			if search in f:
 				user = file
 				file = file.replace("/","%2F")
@@ -46,5 +46,3 @@ for root, dirs, files in os.walk('.'):
 				link3 = '</a><br>'
 				trunc = (user[:64] + '..') if len(user) > 40 else user
 				print link1 + file + link2 + trunc + link3
-
-				

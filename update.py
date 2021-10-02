@@ -9,14 +9,14 @@ import os
 
 start = 1
 
-s = nntplib.NNTP('', user='', password='')
-resp, count, first, last, name = s.group('')
+s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
+resp, count, first, last, name = s.group('alt.magick')
 cnt = int(last)
 s.quit()
 
 while start == 1:
-	s = nntplib.NNTP('', user='', password='')
-	resp, count, first, last, name = s.group('')
+	s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
+	resp, count, first, last, name = s.group('alt.magick')
 	resp2, num2, id2, list = s.body(str(cnt))
 	r, n, id3, headers = s.head(id2)
 	s.quit()
@@ -25,7 +25,7 @@ while start == 1:
 		field = check.lower()
 		if field.startswith("message-id: "):
 			id = check
-			with open("history.txt", 'a+') as f:
+			with open("/var/www/html/alt-magick.com/public_html/history.txt", 'a+') as f:
 				for lastmessage in f:
 					if(id == lastmessage.rstrip()):
 						start = 0
@@ -36,8 +36,8 @@ while start == 1:
 
 cnt = cnt + 2
 
-s = nntplib.NNTP('', user='', password='')
-resp, count, first, last, name = s.group('')
+s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
+resp, count, first, last, name = s.group('alt.magick')
 message = "\nGroup: " + name + " has " + count + " articles, ranged from: " + first + " to " + last + ". \n\nStarting at article: " + str(cnt) + ".\n"
 print(message)
 s.quit()
@@ -47,8 +47,8 @@ while cnt <= int(last):
 	loop = 0
 	while loop == 0:
 		try:
-			s = nntplib.NNTP('', user='', password='')
-			resp, count, first, last, name = s.group('')
+			s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
+			resp, count, first, last, name = s.group('alt.magick')
 			resp2, num2, id2, list = s.body(str(cnt))
 			r, n, id3, headers = s.head(id2)
 			s.quit()
@@ -80,7 +80,7 @@ while cnt <= int(last):
 		if field.startswith("message-id: "):
 			id = check4
 			print("### %s\n" % id)
-			history = open("history.txt", 'a+')
+			history = open("/var/www/html/alt-magick.com/public_html/history.txt", 'a+')
 			history.write("%s\n" % id)
 			history.close()
 
@@ -93,7 +93,7 @@ while cnt <= int(last):
 		filename = '"' + filename + '"'
 
 	try:
-		path  = "/var/www/html/"
+		path  = "/var/www/html/alt-magick.com/public_html/"
 		path = path + filename
 		file = open(path, 'a+')
 	except:
