@@ -2,11 +2,20 @@
 # Copyright (c) 2021 Corey White
 
 import nntplib
-import string
-import re
+from email.header import decode_header
+import quopri
+import traceback
 
-s = nntplib.NNTP('', user='', password='')
-resp, count, first, last, name = s.group('')
+########### Configuration area ########################
+def getConnection():
+	return nntplib.NNTP('<server>', user='', password='') #Python2 supports in nntplib only unsecure connections. Use Stunnel to "translate" if you need access to encrypted newsserver
+group = "<group>" #Enter the group you want to download here
+windowsFilenames = True #Use filenames that windows handles
+codepage = "cp1252" #For German
+########### Configuration area end ####################
+
+s = getConnection()
+resp, count, first, last, name = s.group(group)
 message = "\nGroup: " + name + " has " + count + " articles, ranged from: " + first + " to " + last + ".\n"
 print(message)
 cnt =  int(last)
@@ -15,14 +24,17 @@ while cnt >= int(first):
 	loop = 0
 	while loop == 0:
 		try:
-			s = nntplib.NNTP('', user='', password='')
-			resp, count, first, last, name = s.group('')
+			s = getConnection()
+			resp, count, first, last, name = s.group(group)
 			resp2, num2, id2, list = s.body(str(cnt))
 			r, n, id3, headers = s.head(id2)
 			s.quit()
 			loop =  1
-		except:
-			cnt = cnt - 1
+		except Exception as e:
+			print("Error with connection")
+			print(e)
+			print(traceback.format_exc())
+			#cnt = cnt - 1 #Commented to retry infinite time
 	author = "from: "
 	subject = "subject: "
 	date = "date: "
@@ -51,12 +63,35 @@ while cnt >= int(first):
 			history.write("%s\n" % id)
 			history.close()
 
-	filename = author[6:]
-	filename = filename.decode('utf-8','ignore').encode("utf-8")
+	subject = decode_header(subject)
+	subjectDecoded = ""
+	for part in subject:
+		subjectDecoded += part[0].decode("utf-8" if part[1] == None else part[1]) + " "
+	
+	subjectDecoded=subjectDecoded[:-1]
+	subject = subjectDecoded.encode("utf-8")
+		
+	#filename = author[6:]
+	filename = str(cnt) + "-" + author[6:] + "---" + subject[8:] #id[12:] + "#" +
+	
+	
+	if (windowsFilenames):
+		filename = filename.replace(r'<','[')
+		filename = filename.replace(r'>',']')
+		filename = filename.replace('\\','_')
+		filename = filename.replace(r':','+') #like wget does
+		filename = filename.replace(r'?','@') #like wget does
+		filename = filename.replace(r'|','_')
+		filename = filename.replace(r'/','_')
+		filename = filename.replace(r'"','=')
+		filename = filename.replace(r'*','_')
+	filename += ".txt"	
+		
+	#filename = filename.decode('utf-8','ignore').encode("utf-8")
 	filename = filename.replace(r'/', '')
 	filename = ' '.join(filename.split())
 	filename = filename.strip()
-	if filename[0] != "'" and filename[0] != '"':
+	if filename[0] != "'" and filename[0] != '"' and not windowsFilenames:
 		filename = '"' + filename + '"'
 
 	try:
@@ -71,7 +106,7 @@ while cnt >= int(first):
 	file.write("%s\n\n" % id);
 
 	for line in list:
-		file.write(line[:80])
+		file.write(quopri.decodestring(line[:8000]).decode(codepage).encode("utf-8"))
 		file.write("\n")
 
 	file.write("\n\n")
