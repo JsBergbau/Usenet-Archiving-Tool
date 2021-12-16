@@ -106,7 +106,7 @@ while cnt >= int(first):
 	file.write("%s\n\n" % id);
 
 	for line in list:
-		file.write(quopri.decodestring(line[:8000]).decode(codepage).encode("utf-8"))
+		file.write((line)
 		file.write("\n")
 
 	file.write("\n\n")
