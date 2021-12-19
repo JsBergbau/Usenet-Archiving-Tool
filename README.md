@@ -9,3 +9,4 @@ https://alt-magick.com
 (NOTE)   NNTP is a very slow protocol. In order to download every post on alt.magick I had to leave this program running for over 24 hours. 
 
 Run update.py to download messages.  Use the linux 'screen' command to run check.py in the background which will do live updates!
+Searching is slow for entire newsgroup archives.
