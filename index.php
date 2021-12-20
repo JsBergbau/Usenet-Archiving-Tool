@@ -34,10 +34,12 @@ $number = $_POST['total'];
 }
 
 $filelist = scandir('/var/www/html/alt-magick.com/public_html/');
+$extra_files = 16; // Change for your system
 //get subset of file array
-$selectedFiles = array_slice($filelist, count($filelist) - 20 - $number,($number-$start)+1);
+$selectedFiles = array_slice($filelist, count($filelist) - $extra_files - $number,($number-$start)+1);
 //output appropriate items
 $numposts = 1;
+
 if($start > 0 && $number >0){
 	foreach( array_reverse($selectedFiles) as $file)
 	{
