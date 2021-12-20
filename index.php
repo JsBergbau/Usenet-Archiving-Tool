@@ -19,7 +19,7 @@ Alt.Magick<br><br>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 
   First &nbsp; <input type="text" name="first"><br><br>
-  Until &nbsp; <input type="text" name="total"><br><br>
+  Last &nbsp; <input type="text" name="total"><br><br>
   <input type="submit" value="Browse"> &nbsp; &nbsp; or &nbsp; &nbsp; [<a href="search.php">Search</a>]<br><br>
 </form>
 
@@ -34,14 +34,16 @@ $number = $_POST['total'];
 }
 
 $filelist = scandir('/var/www/html/alt-magick.com/public_html/');
-
 //get subset of file array
-$selectedFiles = array_slice($filelist, count($filelist)-(29+$start), $number);
-
+$selectedFiles = array_slice($filelist, count($filelist) - 20 - $number,($number-$start)+1);
 //output appropriate items
-foreach( array_reverse($selectedFiles) as $file)
-{
-    echo "<a href='" . $file . "'>" . $file . "</a><br><br>";
+$numposts = 1;
+if($start > 0 && $number >0){
+	foreach( array_reverse($selectedFiles) as $file)
+	{
+	    echo $numposts . ". &nbsp <a href='" . $file . "'>" . $file . "</a><br><br>";
+	    $numposts = $numposts + 1;
+	}
 }
 ?>
 </div>	
