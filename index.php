@@ -38,7 +38,7 @@ $extra_files = 16; // Change for your system
 //get subset of file array
 $selectedFiles = array_slice($filelist, count($filelist) - $extra_files - $number,($number-$start)+1);
 //output appropriate items
-$numposts = 1;
+$numposts = $start;
 
 if($start > 0 && $number >0){
 	foreach( array_reverse($selectedFiles) as $file)
