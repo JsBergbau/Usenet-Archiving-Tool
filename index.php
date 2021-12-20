@@ -36,7 +36,7 @@ $number = $_POST['total'];
 $filelist = scandir('/var/www/html/alt-magick.com/public_html/');
 
 //get subset of file array
-$selectedFiles = array_slice($filelist, sizeof($filelist)-($number+19+$start), $number);
+$selectedFiles = array_slice($filelist, sizeof($filelist)-(29+$start), $number);
 
 //output appropriate items
 foreach( array_reverse($selectedFiles) as $file)
