@@ -19,5 +19,5 @@ for fname in directory:
         f = open(user_input + os.sep + fname, 'r')
 
         if search in f.read():
-            print("<a href='" + fname + "'>" + fname + "</a> <br>")
+            print("<a href='" + fname + "'>" + fname + "</a> <br><br>")
         f.close()

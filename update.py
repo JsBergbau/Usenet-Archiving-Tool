@@ -10,7 +10,7 @@ import sys
 
 ########### Configuration area ########################
 def getConnection():
-	return nntplib.NNTP('server', user='login', password='pass') #Python2 supports in nntplib only unsecure connections. Use Stunnel to "translate" if you need access to encrypted newsserver
+	return nntplib.NNTP('news.frugalusenet.com', user='realityhacker', password='tybycibe') #Python2 supports in nntplib only unsecure connections. Use Stunnel to "translate" if you need access to encrypted newsserver
 group = "alt.magick" #Enter the group you want to download here
 windowsFilenames = False #Use filenames that windows handles
 codepage = "cp1252" #For German
