@@ -4,7 +4,7 @@ This code is for archiving Usenet discussions, not downloading binaries. It down
 
 (UPDATE) An example archive for the group alt.magick can be found at:
 
-https://alt-magick.comb
+https://alt-magick.com
 
 (NOTE)   NNTP is a very slow protocol. In order to download every post on alt.magick I had to leave this program running for over 24 hours.
 Searching is slow for entire newsgroup archives.
