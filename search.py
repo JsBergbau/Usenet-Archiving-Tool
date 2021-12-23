@@ -17,7 +17,7 @@ for fname in directory:
     if os.path.isfile(user_input + os.sep + fname):
         # Full path
         f = open(user_input + os.sep + fname, 'r')
-
+	x = fname.replace("_", " ")
         if search in f.read():
-            print("<a href='" + fname + "'>" + fname + "</a> <br><br>")
+            print("<a href='" + fname + "' target=_'blank'>" + x + "</a> <br><br>")
         f.close()

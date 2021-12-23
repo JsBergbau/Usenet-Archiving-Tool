@@ -34,16 +34,15 @@ $number = $_POST['total'];
 }
 
 $filelist = scandir('/var/www/html/alt-magick.com/public_html/');
-$extra_files = 16; // Change for your system
 //get subset of file array
-$selectedFiles = array_slice($filelist, count($filelist) - $extra_files - $number,($number-$start)+1);
+$selectedFiles = array_slice($filelist, count($filelist) - 5 - $number,($number-$start)+1);
 //output appropriate items
 $numposts = $start;
-
 if($start > 0 && $number >0){
 	foreach( array_reverse($selectedFiles) as $file)
 	{
-	    echo $numposts . ". &nbsp <a href='" . $file . "'>" . $file . "</a><br><br>";
+	    $link = str_replace("_"," ",$file);
+	    echo $numposts . ". &nbsp <a href='" . $file . "' target='_blank'>" . $link . "</a><br><br>";
 	    $numposts = $numposts + 1;
 	}
 }

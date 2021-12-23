@@ -10,9 +10,8 @@ import sys
 
 ########### Configuration area ########################
 def getConnection():
-	return nntplib.NNTP('news.frugalusenet.com', user='realityhacker', password='tybycibe') #Python2 supports in nntplib only unsecure connections. Use Stunnel to "translate" if you need access to encrypted newsserver
+	return nntplib.NNTP('server', user='login', password='password') #Python2 supports in nntplib only unsecure connections. Use Stunnel to "translate" if you need access to encrypted newsserver
 group = "alt.magick" #Enter the group you want to download here
-windowsFilenames = False #Use filenames that windows handles
 codepage = "cp1252" #For German
 ########### Configuration area end ####################
 
@@ -76,29 +75,26 @@ while cnt >= int(first):
 	#filename = author[6:]
 	filename = str(cnt).zfill(6) + " " + author[6:] + " - " + subject[8:] #id[12:] + "#" +
 	
-	
-	if (windowsFilenames):
-		filename = filename.replace(r'<','[')
-		filename = filename.replace(r'>',']')
-		filename = filename.replace('\\','_')
-		filename = filename.replace(r':','+') #like wget does
-		filename = filename.replace(r'?','@') #like wget does
-		filename = filename.replace(r'|','_')
-		filename = filename.replace(r'/','_')
-		filename = filename.replace(r'"','=')
-		filename = filename.replace(r'*','_')
-		
-	#filename = filename.decode('utf-8','ignore').encode("utf-8")
 	filename = filename.replace(r'/', '')
 	filename = ' '.join(filename.split())
 	filename = filename.strip()
-	if filename[0] != "'" and filename[0] != '"' and not windowsFilenames:
-		filename = '"' + filename + '"'
+	saving = ""
+	for character in filename:
+		if character.isalnum():
+			saving += character
+		if character == " ":
+			saving += "_"
+		if character == ".":
+			saving += character
+		if character =="@":
+			saving += character
 
-	if os.path.isfile(filename):
+	saving = "/var/www/html/alt-magick.com/public_html/" + saving
+	print(saving);
+	if os.path.isfile(saving):
         	sys.exit()
 	try:
-		file = open(filename, 'a+')
+		file = open(saving, 'a+')
 	except:
 		file = open("unknown", 'a+')
 

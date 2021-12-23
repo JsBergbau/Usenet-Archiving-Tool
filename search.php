@@ -30,7 +30,7 @@ Find &nbsp; <input type="text" name="searchbox"><br><br><input type="submit" val
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $searched = $_POST["searchbox"];
         $s = filter_var($searched, FILTER_SANITIZE_STRING);
-        $output = shell_exec('./search.py "' . $s . '"');
+        $output = shell_exec('/var/www/html/alt-magick.com/search.py "' . $s . '"');
         echo $output;
         }
 ?>
