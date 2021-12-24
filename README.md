@@ -13,3 +13,5 @@ Run update.py to download messages.  Use the linux 'screen' command to run check
 newsgroup.
 
 Thanks to JsBergbau for his work on a fork of this project: (https://github.com/JsBergbau/Usenet-Archiving-Tool)
+
+(NOTE) For security reasons keep python files in a directory that's not open to the web.
