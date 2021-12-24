@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $start = $_POST['first'];
 $number = $_POST['total'];
 }
-
+$exFiles = 5 //For system files
 $filelist = scandir('/var/www/html/alt-magick.com/public_html/');
 //get subset of file array
 $selectedFiles = array_slice($filelist, count($filelist) - 5 - $number,($number-$start)+1);
