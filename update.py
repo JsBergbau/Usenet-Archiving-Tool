@@ -2,59 +2,40 @@
 # Copyright (c) 2021 Corey White
 
 import nntplib
-import string
-import shutil
-import re
-import os
+from email.header import decode_header
+import quopri
+import traceback
+import os.path
+import sys
 
-start = 1
+########### Configuration area ########################
+def getConnection():
+	return nntplib.NNTP('server', user='login', password='pass') #Python2 supports in nntplib only unsecure connections. Use Stunnel to "translate" if you need access to encrypted newsserver
+group = "alt.magick" #Enter the group you want to download here
+codepage = "cp1252" #For German
+########### Configuration area end ####################
 
-s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
-resp, count, first, last, name = s.group('alt.magick')
-cnt = int(last)
-s.quit()
-
-while start == 1:
-	s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
-	resp, count, first, last, name = s.group('alt.magick')
-	resp2, num2, id2, list = s.body(str(cnt))
-	r, n, id3, headers = s.head(id2)
-	s.quit()
-
-	for check in headers:
-		field = check.lower()
-		if field.startswith("message-id: "):
-			id = check
-			with open("/var/www/html/alt-magick.com/public_html/history.txt", 'a+') as f:
-				for lastmessage in f:
-					if(id == lastmessage.rstrip()):
-						start = 0
-						if cnt == int(last):
-							print("\nNothing to do.\n")
-							quit()
-	cnt = cnt - 1
-
-cnt = cnt + 2
-
-s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
-resp, count, first, last, name = s.group('alt.magick')
-message = "\nGroup: " + name + " has " + count + " articles, ranged from: " + first + " to " + last + ". \n\nStarting at article: " + str(cnt) + ".\n"
+s = getConnection()
+resp, count, first, last, name = s.group(group)
+message = "\nGroup: " + name + " has " + count + " articles, ranged from: " + first + " to " + last + ".\n"
 print(message)
+cnt =  int(last)
 s.quit()
-
-
-while cnt <= int(last):
+while cnt >= int(first):
 	loop = 0
 	while loop == 0:
 		try:
-			s = nntplib.NNTP('news.eternal-september.org', user='adventmagic', password='hymaqfmzr')
-			resp, count, first, last, name = s.group('alt.magick')
+			s = getConnection()
+			resp, count, first, last, name = s.group(group)
 			resp2, num2, id2, list = s.body(str(cnt))
 			r, n, id3, headers = s.head(id2)
 			s.quit()
 			loop =  1
-		except:
-			cnt = cnt - 1
+		except Exception as e:
+			print("Error with connection")
+			print(e)
+			print(traceback.format_exc())
+			cnt = cnt - 1 #Commented to retry infinite time
 	author = "from: "
 	subject = "subject: "
 	date = "date: "
@@ -79,50 +60,58 @@ while cnt <= int(last):
 		field = check4.lower()
 		if field.startswith("message-id: "):
 			id = check4
-			print("### %s\n" % id)
-			history = open("/var/www/html/alt-magick.com/public_html/history.txt", 'a+')
-			history.write("%s\n" % id)
-			history.close()
 
-	filename = author[6:]
-	filename = filename.decode('utf-8','ignore').encode("utf-8")
+	subject = decode_header(subject)
+	subjectDecoded = ""
+	for part in subject:
+		try:
+			subjectDecoded += part[0].decode("utf-8" if part[1] == None else part[1]) + " "
+		except:
+			subjectDecoded += " "
+	
+	subjectDecoded=subjectDecoded[:-1]
+	subject = subjectDecoded.encode("utf-8")
+		
+	#filename = author[6:]
+	filename = str(cnt).zfill(6) + " " + author[6:] + " - " + subject[8:] #id[12:] + "#" +
+	
 	filename = filename.replace(r'/', '')
 	filename = ' '.join(filename.split())
 	filename = filename.strip()
-	if filename[0] != "'" and filename[0] != '"':
-		filename = '"' + filename + '"'
+	saving = ""
+	for character in filename:
+		if character.isalnum():
+			saving += character
+		if character == " ":
+			saving += "_"
+		if character == ".":
+			saving += character
+		if character =="@":
+			saving += character
 
+	saving = "/var/www/html/alt-magick.com/public_html/" + saving
+	print(saving);
+	if os.path.isfile(saving):
+        	sys.exit()
 	try:
-		path  = "/var/www/html/alt-magick.com/public_html/"
-		path = path + filename
-		file = open(path, 'a+')
+		file = open(saving, 'a+')
 	except:
-		continue
+		file = open("unknown", 'a+')
 
-	buffer = open("buffer", "w")		
-	buffer.write("%s\n\n" % author);
-	buffer.write("%s\n\n" % subject);
-	buffer.write("%s\n\n" % date);
-	buffer.write("%s\n\n" % id);
+	file.write("### %s\n\n" % str(cnt))
+	file.write("%s\n\n" % author);
+	file.write("%s\n\n" % subject);
+	file.write("%s\n\n" % date);
+	file.write("%s\n\n" % id);
 
 	for line in list:
-		buffer.write(line[:80])
-		buffer.write("\n")
+		file.write(line[:8000])
+		file.write("\n")
 
-	buffer.write("\n\n")
-	buffer.write(file.read())
-	buffer.close()
+	file.write("\n\n")
 	file.close()
-	buffer = open("buffer", "r")
-	file = open(path, "w")
-	file.write(buffer.read())
-	buffer.close()
 
-	file.close()
-	os.remove("buffer")
-	print("Saving: %s\n" % str(cnt))
-
-	cnt = cnt + 1
-
-print ("Done.")
+	print("%s" % str(cnt))
+	cnt = cnt - 1
+print ("\n Done.")
 quit()
